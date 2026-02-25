@@ -13,9 +13,17 @@ Download the model weights
 
 mkdir models 
 
+(giant models)
+
 wget https://dl.fbaipublicfiles.com/vjepa2/vitg-384.pt -P models 
 
 wget https://dl.fbaipublicfiles.com/vjepa2/evals/ssv2-vitg-384-64x2x3.pt -P models 
+
+(large models)
+
+wget https://dl.fbaipublicfiles.com/vjepa2/vitl.pt -O models/vitl-256.pt
+
+wget https://dl.fbaipublicfiles.com/vjepa2/evals/ssv2-vitl-16x2x3.pt -O models/ssv2-vitl-256-16x2x3.pt
 
 ## Installation
 
