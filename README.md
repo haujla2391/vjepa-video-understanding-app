@@ -1,5 +1,5 @@
 # vjepa-video-understanding-app
-Uses Meta's Video Joint Embedding Predictive Architecture model to predict the next action in a video uploaded by the user.
+A full-stack video understanding web application built using VJEPA2, a self-supervised video world model developed by Meta AI. The system extracts latent video representations and performs downstream action classification through a trained neural head.
 
 ## Dependencies
 
