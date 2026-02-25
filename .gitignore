@@ -1,11 +1,31 @@
+# Python
 __pycache__/
 *.pyc
-*.pt
-*.pth
-*.ckpt
-.env
-.venv
-.envrc
-*.mp4
-data/s
+*.pyo
+*.pyd
+env/
+venv/
+*.env
+
+# macOS
+.DS_Store
+
+# Conda
+*.conda
+*.ipynb_checkpoints
+
+# Models / weights
+models/
+
+# Logs
+*.log
+wandb/
+.vscode
+
+# VJEPA2 cloned repo (ignored since it’s huge)
 vjepa2/
+
+# Node / React
+node_modules/
+build/
+dist/
