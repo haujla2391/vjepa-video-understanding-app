@@ -18,7 +18,7 @@ def predict(service, video_path):
 
     with torch.inference_mode():
         # calls a preprocessing function and returns pytorch tensor, and selects the preprocessed tensor
-        x_hf = service.processor(video, return_tensors="pt")["pixel_values_videos"].to(device)
+        x_hf = service.hf_transform(video, return_tensors="pt")["pixel_values_videos"].to(device)
         # Extract the patch-wise features from the last layer
         out_patch_features_hf = service.model_hf.get_vision_features(x_hf)
 

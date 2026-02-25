@@ -1,6 +1,8 @@
 import os
 import shutil
+import json
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 
 from backend.model_loader import VJEPAService
 from backend.inference import predict
@@ -8,8 +10,18 @@ from backend.inference import predict
 # create an instance of FastAPI
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Load model once at startup
 service = VJEPAService()
+with open("ssv2_classes.json", "r") as f:
+    class_map = json.load(f)
 
 # When requests to root URL
 @app.get("/")
@@ -25,9 +37,16 @@ async def classify_video(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
 
     top5_indices, top5_probs = predict(service, temp_path)
+    print("DEBUG: indices:", top5_indices, "probs:", top5_probs)
+
+    results = []
+    for idx, prob in zip(top5_indices, top5_probs):
+        results.append({
+            "label": class_map[str(idx)],
+            "probability": float(prob)
+        })
+
+    print("DEBUG: results:", results)
     os.remove(temp_path)
 
-    return {
-        "top5_indices": top5_indices[0],
-        "top5_scores": top5_probs[0],
-    }
+    return {"predictions": results}
