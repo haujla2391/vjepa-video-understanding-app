@@ -23,9 +23,9 @@ with open("ssv2_classes.json", "r") as f:
 
 # Load model once at startup
 service = VJEPAService(
-    pt_model_path="models/vitg-384.pt",
-    classifier_model_path="models/ssv2-vitg-384-64x2x3.pt",
-    img_size=384,
+    pt_model_path="models/vitl-256.pt",
+    classifier_model_path="models/ssv2-vitl-256-16x2x3.pt",
+    img_size=256,
     num_frames=64
 )
 
