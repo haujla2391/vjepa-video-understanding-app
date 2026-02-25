@@ -42,9 +42,12 @@ platformdirs==4.9.2
 portalocker==3.2.0
 protobuf==6.33.5
 psutil==7.2.2
+pybind11 @ file:///D:/bld/bld/rattler-build_pybind11_1771365898/work
+pybind11-global @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_pybind11-global_1771365839/work
 pydantic==2.12.5
 pydantic_core==2.41.5
 Pygments==2.19.2
+python-multipart==0.0.22
 PyYAML==6.0.3
 regex==2026.2.19
 requests==2.32.5
@@ -64,7 +67,7 @@ torch @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_7918
 torchaudio @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_13h7jqda5r/croot/torchaudio_1739894013231/work
 torchvision @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_24c9g5yuof/croot/torchvision_1746818807124/work
 tqdm==4.67.3
-transformers==5.2.0
+transformers @ git+https://github.com/huggingface/transformers@014cef86e9c2fb64083b143b6e7cc51ae35bbc72
 typer==0.24.1
 typer-slim==0.24.0
 typing-inspection==0.4.2
