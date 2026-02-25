@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pt
+*.pth
+*.ckpt
+.env
+.venv
+.envrc
+*.mp4
+data/s
