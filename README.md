@@ -3,6 +3,8 @@ A full-stack video understanding web application built using VJEPA2, a self-supe
 
 ## Dependencies
 
+pip install -r backend/requirements.txt
+
 This project uses Meta AI's VJEPA2 model:
 
 git clone https://github.com/facebookresearch/vjepa2.git
