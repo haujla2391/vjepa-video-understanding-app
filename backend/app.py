@@ -18,10 +18,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load model once at startup
-service = VJEPAService()
 with open("ssv2_classes.json", "r") as f:
     class_map = json.load(f)
+
+# Load model once at startup
+service = VJEPAService(
+    pt_model_path="models/vitg-384.pt",
+    classifier_model_path="models/ssv2-vitg-384-64x2x3.pt",
+    img_size=384,
+    num_frames=64
+)
 
 # When requests to root URL
 @app.get("/")
@@ -37,7 +43,6 @@ async def classify_video(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
 
     top5_indices, top5_probs = predict(service, temp_path)
-    print("DEBUG: indices:", top5_indices, "probs:", top5_probs)
 
     results = []
     for idx, prob in zip(top5_indices, top5_probs):
@@ -46,7 +51,6 @@ async def classify_video(file: UploadFile = File(...)):
             "probability": float(prob)
         })
 
-    print("DEBUG: results:", results)
     os.remove(temp_path)
 
     return {"predictions": results}
