@@ -5,7 +5,7 @@ from decord import VideoReader
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # from demo code
-def get_video(video_path, num_frames=16):
+def get_video(video_path, num_frames=64):
     vr = VideoReader(video_path)
     # sampling 16 frames (or specified amount) from video
     frame_idx = np.linspace(0, len(vr) - 1, num_frames).astype(int)
@@ -13,16 +13,16 @@ def get_video(video_path, num_frames=16):
     return video
 
 def predict(service, video_path):
-    video = get_video(video_path)
+    video = get_video(video_path, num_frames=64)
     video = torch.from_numpy(video).permute(0, 3, 1, 2) # reorders tensor to # frames, color channels, height, width
 
     with torch.inference_mode():
-        # calls a preprocessing function and returns pytorch tensor, and selects the preprocessed tensor
-        x_hf = service.hf_transform(video, return_tensors="pt")["pixel_values_videos"].to(device)
+        # calls a preprocessing function and returns pytorch tensor
+        x_pt = service.pt_video_transform(video).to(device).unsqueeze(0)
         # Extract the patch-wise features from the last layer
-        out_patch_features_hf = service.model_hf.get_vision_features(x_hf)
+        out_patch_features_pt = service.model_pt(x_pt)
 
-        out_classifier = service.classifier(out_patch_features_hf)
+        out_classifier = service.classifier(out_patch_features_pt)
 
         # Apply softmax to full distribution
         probs = torch.softmax(out_classifier, dim=-1)
