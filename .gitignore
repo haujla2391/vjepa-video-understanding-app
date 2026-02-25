@@ -24,8 +24,7 @@ wandb/
 
 # VJEPA2 cloned repo (ignored since it’s huge)
 vjepa2/
-sample_video.mp4
-torchcodec/
+*.mp4
 
 # Node / React
 node_modules/
