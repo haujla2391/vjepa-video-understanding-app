@@ -9,6 +9,12 @@ This project uses Meta AI's VJEPA2 model:
 
 git clone https://github.com/facebookresearch/vjepa2.git
 
+Download the model weights
+
+mkdir models
+wget https://dl.fbaipublicfiles.com/vjepa2/vitg-384.pt -P models
+wget https://dl.fbaipublicfiles.com/vjepa2/evals/ssv2-vitg-384-64x2x3.pt -P models
+
 ## Installation
 
 ### 1. Clone this repo:
@@ -24,7 +30,9 @@ git clone https://github.com/facebookresearch/vjepa2.git
 ### 5. Run backend
 uvicorn backend.main:app --reload
 ### 6. Open frontend in your browser
-
+cd frontend
+npm install
+npm start
 
 ## Architecture
 
