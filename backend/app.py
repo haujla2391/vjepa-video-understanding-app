@@ -1,3 +1,5 @@
+import backend.vjepa_path_fix   # ← this runs the sys.path changes
+
 import os
 import shutil
 import json
@@ -7,7 +9,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.model_loader import VJEPAService
 from backend.inference import predict
 
-# create an instance of FastAPI
 app = FastAPI()
 
 app.add_middleware(
@@ -21,15 +22,12 @@ app.add_middleware(
 with open("ssv2_classes.json", "r") as f:
     class_map = json.load(f)
 
-# Load model once at startup
 service = VJEPAService()
 
-# When requests to root URL
 @app.get("/")
 def read_root():
     return {"message": "VJEPA2 Video Understanding API is running"}
 
-# API endpoint for POST requests at predict
 @app.post("/predict")
 async def classify_video(file: UploadFile = File(...)):
     temp_path = f"temp_{file.filename}"
