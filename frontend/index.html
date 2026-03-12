@@ -7,8 +7,11 @@
     <body>
         <h1>Upload a Video</h1>
 
-        <input type="file" id="videoInput" accept="video/*" />
+        <input type="file" id="videoInput" accept="video/*" onchange="previewVideo()" />
+        <video id="videoPreview" controls style="display:none; max-width:400px;"></video>
+
         <button onclick="uploadVideo()">Predict</button>
+        <p id="loading" style="display:none;">Analyzing video...</p>
 
         <h2>Predictions:</h2>
         <ul id="results"></ul>

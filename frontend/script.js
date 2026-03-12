@@ -7,22 +7,56 @@ async function uploadVideo() {
         return;
     }
 
+    const resultsList = document.getElementById("results");
+    const loading = document.getElementById("loading");
+
+    loading.style.display = "block";
+    resultsList.innerHTML = "";
+
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch("http://127.0.0.1:8000/predict", {
-        method: "POST",
-        body: formData
-    });
+    try {
+        const response = await fetch("http://127.0.0.1:8000/predict", {
+            method: "POST",
+            body: formData
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    const resultsList = document.getElementById("results");
-    resultsList.innerHTML = "";
+        data.predictions.forEach(item => {
+            const container = document.createElement("div");
 
-    data.predictions.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = `${item.label} (${item.probability.toFixed(2)}%)`;
-        resultsList.appendChild(li);
-    });
+            const label = document.createElement("p");
+            label.textContent = `${item.label} (${item.probability.toFixed(2)}%)`;
+
+            const bar = document.createElement("div");
+            bar.style.width = item.probability + "%";
+            bar.style.height = "10px";
+            bar.style.background = "#4CAF50";
+
+            container.appendChild(label);
+            container.appendChild(bar);
+
+            resultsList.appendChild(container);
+        });
+
+    } catch (error) {
+        alert("Error uploading video.");
+        console.error(error);
+    }
+
+    loading.style.display = "none";
+}
+
+function previewVideo() {
+    const fileInput = document.getElementById("videoInput");
+    const file = fileInput.files[0];
+
+    if (file) {
+        const videoURL = URL.createObjectURL(file);
+        const videoPlayer = document.getElementById("videoPreview");
+        videoPlayer.src = videoURL;
+        videoPlayer.style.display = "block";
+    }
 }
