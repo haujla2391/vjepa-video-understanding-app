@@ -1,4 +1,4 @@
-from src.models.attentive_pooler import AttentiveClassifier
+from backend.attentive_pooler import AttentiveClassifier
 
 import torch
 from backend.vjepa_demo import load_pretrained_vjepa_classifier_weights, build_pt_video_transform, device
