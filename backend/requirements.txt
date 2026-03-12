@@ -59,4 +59,3 @@ uvicorn==0.41.0
 wandb==0.25.0
 webdataset==1.0.2
 Werkzeug==3.1.6
-git+https://github.com/facebookresearch/vjepa2.git@main
