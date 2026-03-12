@@ -22,12 +22,7 @@ with open("ssv2_classes.json", "r") as f:
     class_map = json.load(f)
 
 # Load model once at startup
-service = VJEPAService(
-    pt_model_path="models/vitl-256.pt",
-    classifier_model_path="models/ssv2-vitl-256-16x2x3.pt",
-    img_size=256,
-    num_frames=64
-)
+service = VJEPAService()
 
 # When requests to root URL
 @app.get("/")
@@ -38,19 +33,20 @@ def read_root():
 @app.post("/predict")
 async def classify_video(file: UploadFile = File(...)):
     temp_path = f"temp_{file.filename}"
+    try:
+        with open(temp_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
-    with open(temp_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        top5_indices, top5_probs = predict(service, temp_path)
 
-    top5_indices, top5_probs = predict(service, temp_path)
+        results = []
+        for idx, prob in zip(top5_indices, top5_probs):
+            results.append({
+                "label": class_map.get(str(idx), "Unknown"),
+                "probability": float(prob)
+            })
 
-    results = []
-    for idx, prob in zip(top5_indices, top5_probs):
-        results.append({
-            "label": class_map[str(idx)],
-            "probability": float(prob)
-        })
-
-    os.remove(temp_path)
-
-    return {"predictions": results}
+        return {"predictions": results}
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
