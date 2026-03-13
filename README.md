@@ -5,6 +5,8 @@ A full-stack video understanding web application built using VJEPA2, a self-supe
 
 https://vjepa-video-app.vercel.app/
 
+Doesn't run since the model is too big to load in Render
+
 ## Architecture
 
 ![architecture model](images/mermaid-diagram-2026-02-25-012213.png)
