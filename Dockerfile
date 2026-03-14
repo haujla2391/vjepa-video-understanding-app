@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y nodejs npm
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy everything
