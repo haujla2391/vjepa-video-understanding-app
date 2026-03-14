@@ -1,3 +1,13 @@
+---
+title: V-JEPA Video Understanding App
+emoji: 🎥
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # vjepa-video-understanding-app
 A full-stack video understanding web application built using VJEPA2, a self-supervised video world model developed by Meta AI. The system extracts latent video representations and performs downstream action classification through a trained neural head.
 
