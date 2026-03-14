@@ -3,9 +3,7 @@ A full-stack video understanding web application built using VJEPA2, a self-supe
 
 ## Deployment
 
-https://vjepa-video-app.vercel.app/
-
-Doesn't run since the model is too big to load in Render
+VISIT https://huggingface.co/spaces/haujla2391/VJEPA2
 
 ## Architecture
 
