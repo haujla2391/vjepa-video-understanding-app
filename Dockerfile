@@ -1,15 +1,16 @@
 FROM python:3.11
 
+# Install system libs for OpenCV (libGL + common video deps)
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Install deps first for better caching
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy everything else
 COPY . .
 
-# Use port 7860 — HF Spaces expects this by default
-# Bind to 0.0.0.0 (required — do NOT use 127.0.0.1 or localhost)
-# Use $PORT if set, but fallback to 7860
 CMD ["sh", "-c", "uvicorn backend.app:app --host 0.0.0.0 --port ${PORT:-7860}"]
