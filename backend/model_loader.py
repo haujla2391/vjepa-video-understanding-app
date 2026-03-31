@@ -7,6 +7,18 @@ from backend.vjepa_demo import load_pretrained_vjepa_classifier_weights, build_p
 
 torch.hub._validate_not_a_forked_repo = lambda *args, **kwargs: None
 
+# Fix the broken localhost URL inside vjepa2
+def fixed_load_state_dict_from_url(url, *args, **kwargs):
+    if "localhost:8300" in url:
+        url = "https://dl.fbaipublicfiles.com/vjepa2/vitl.pt"   # correct public URL
+        print(f"Fixed localhost URL → {url}")
+    return torch.hub._original_load_state_dict_from_url(url, *args, **kwargs)  # need to save original first
+
+# Apply the patch
+if not hasattr(torch.hub, '_original_load_state_dict_from_url'):
+    torch.hub._original_load_state_dict_from_url = torch.hub.load_state_dict_from_url
+torch.hub.load_state_dict_from_url = fixed_load_state_dict_from_url
+
 print("Loading PyTorch V-JEPA 2 backbone via torch.hub...")
 hub_output = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_large', pretrained=True)
 
