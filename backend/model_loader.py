@@ -5,6 +5,8 @@ import os
 import urllib.request
 from backend.vjepa_demo import load_pretrained_vjepa_classifier_weights, build_pt_video_transform, device
 
+torch.hub._validate_not_a_forked_repo = lambda *args, **kwargs: None
+
 print("Loading PyTorch V-JEPA 2 backbone via torch.hub...")
 hub_output = torch.hub.load('facebookresearch/vjepa2', 'vjepa2_vit_large', pretrained=True)
 
